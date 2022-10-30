@@ -18,6 +18,7 @@ services:
 
     volumes:
       - "./web-keys:/go/keys"
+      - "./test.db:/go/test.db"
       - "./config.ini:/go/config.ini"
 
     networks:
@@ -32,22 +33,22 @@ services:
 
     restart: unless-stopped
 
-  writefreely-db:
-    container_name: "writefreely-db"
-    image: "mariadb:latest"
-
-    volumes:
-      - "db-data:/var/lib/mysql/data"
-
-    networks:
-      - "internal_writefreely"
-      - "external_writefreely"
-
-    environment:
-      - MYSQL_DATABASE=writefreely
-      - MYSQL_ROOT_PASSWORD=changeme
-
-    ports:
-      - "3306:3306"
-
-    restart: unless-stopped
+#  writefreely-db:
+#    container_name: "writefreely-db"
+#    image: "mariadb:latest"
+#
+#    volumes:
+#      - "db-data:/var/lib/mysql/data"
+#
+#    networks:
+#      - "internal_writefreely"
+#      - "external_writefreely"
+#
+#    environment:
+#      - MYSQL_DATABASE=writefreely
+#      - MYSQL_ROOT_PASSWORD=changeme
+#
+#    ports:
+#      - "3306:3306"
+#
+#    restart: unless-stopped
