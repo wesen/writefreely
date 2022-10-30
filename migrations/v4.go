@@ -28,6 +28,7 @@ func oauth(db *datastore) error {
 			SetIfNotExists(false).
 			Column(dialect.Column("user_id", wf_db.ColumnTypeInteger, wf_db.UnsetSize)).
 			Column(dialect.Column("remote_user_id", wf_db.ColumnTypeInteger, wf_db.UnsetSize)).
+			PrimaryKeyConstraint("user_id", "remote_user_id").
 			ToSQL()
 		if err != nil {
 			return err
@@ -38,6 +39,7 @@ func oauth(db *datastore) error {
 			Column(dialect.Column("state", wf_db.ColumnTypeVarChar, wf_db.OptionalInt{Set: true, Value: 255})).
 			Column(dialect.Column("used", wf_db.ColumnTypeBool, wf_db.UnsetSize)).
 			Column(dialect.Column("created_at", wf_db.ColumnTypeDateTime, wf_db.UnsetSize).SetDefaultCurrentTimestamp()).
+			PrimaryKeyConstraint("state").
 			UniqueConstraint("state").
 			ToSQL()
 		if err != nil {

@@ -28,10 +28,11 @@ FROM alpine:3
 
 RUN apk add --no-cache openssl ca-certificates curl
 COPY --from=build --chown=daemon:daemon /stage /go
+COPY ./entrypoint.sh /go
 
 WORKDIR /go
 VOLUME /go/keys
 EXPOSE 8080
 USER daemon
 
-ENTRYPOINT ["cmd/writefreely/writefreely"]
+ENTRYPOINT ["./entrypoint.sh"]

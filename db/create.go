@@ -221,6 +221,17 @@ func (b *CreateTableSqlBuilder) UniqueConstraint(columns ...string) *CreateTable
 	return b
 }
 
+func (b *CreateTableSqlBuilder) PrimaryKeyConstraint(columns ...string) *CreateTableSqlBuilder {
+	for _, column := range columns {
+		if _, ok := b.Columns[column]; !ok {
+			// This fails silently.
+			return b
+		}
+	}
+	b.Constraints = append(b.Constraints, fmt.Sprintf("PRIMARY KEY(%s)", strings.Join(columns, ",")))
+	return b
+}
+
 func (b *CreateTableSqlBuilder) SetIfNotExists(ine bool) *CreateTableSqlBuilder {
 	b.IfNotExists = ine
 	return b

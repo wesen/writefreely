@@ -16,10 +16,16 @@ services:
     container_name: "writefreely-web"
     image: "writeas/writefreely:latest"
 
-    volumes:
-      - "./web-keys:/go/keys"
-      - "./test.db:/go/test.db"
-      - "./config.ini:/go/config.ini"
+    environment:
+      CONFIG_INI: "${CONFIG_INI}"
+      COOKIES_AUTH_KEY: "${COOKIES_AUTH_KEY}"
+      COOKIES_ENC_KEY: "${COOKIES_ENC_KEY}"
+      CSRF_KEY: "${CSRF_KEY}"
+      EMAIL_KEY: "${EMAIL_KEY}"
+
+#    volumes:
+#      - "./web-keys:/go/keys"
+#      - "./config.ini:/go/config.ini"
 
     networks:
       - "internal_writefreely"

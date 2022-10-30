@@ -96,7 +96,8 @@ func Migrate(db *datastore) error {
 		_, err = db.Exec(`CREATE TABLE appmigrations (
 			version ` + db.typeInt() + ` NOT NULL,
 			migrated ` + db.typeDateTime() + ` NOT NULL,
-			result ` + db.typeText() + ` NOT NULL
+			result ` + db.typeText() + ` NOT NULL,
+    PRIMARY KEY (version, migrated)
 		) ` + db.engine() + `;`)
 		if err != nil {
 			return err

@@ -38,10 +38,11 @@ CREATE TABLE IF NOT EXISTS `appcontent` (
 -- Table structure for table `appmigrations`
 --
 
-CREATE TABLE `appmigrations` (
+CREATE TABLE IF NOT EXISTS `appmigrations` (
   `version` int(11) NOT NULL,
   `migrated` datetime NOT NULL,
-  `result` text NOT NULL
+  `result` text NOT NULL,
+    PRIMARY KEY (`version`, `migrated`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -204,13 +205,14 @@ CREATE TABLE IF NOT EXISTS `userattributes` (
 -- Table structure for table `userinvites`
 --
 
-CREATE TABLE `userinvites` (
+CREATE TABLE IF NOT EXISTS `userinvites` (
   `id` char(6) NOT NULL,
   `owner_id` int(11) NOT NULL,
   `max_uses` smallint(6) DEFAULT NULL,
   `created` datetime NOT NULL,
   `expires` datetime DEFAULT NULL,
-  `inactive` tinyint(1) NOT NULL
+  `inactive` tinyint(1) NOT NULL,
+    PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -235,7 +237,8 @@ CREATE TABLE IF NOT EXISTS `users` (
 -- Table structure for table `usersinvited`
 --
 
-CREATE TABLE `usersinvited` (
+CREATE TABLE IF NOT EXISTS `usersinvited` (
   `invite_id` char(6) NOT NULL,
-  `user_id` int(11) NOT NULL
+  `user_id` int(11) NOT NULL,
+    PRIMARY KEY (`invite_id`,`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
