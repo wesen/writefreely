@@ -11,11 +11,13 @@ networks:
 
 services:
   writefreely-web:
+    build: .
+
     container_name: "writefreely-web"
     image: "writeas/writefreely:latest"
 
     volumes:
-      - "web-keys:/go/keys"
+      - "./web-keys:/go/keys"
       - "./config.ini:/go/config.ini"
 
     networks:
@@ -39,9 +41,13 @@ services:
 
     networks:
       - "internal_writefreely"
+      - "external_writefreely"
 
     environment:
       - MYSQL_DATABASE=writefreely
       - MYSQL_ROOT_PASSWORD=changeme
+
+    ports:
+      - "3306:3306"
 
     restart: unless-stopped
