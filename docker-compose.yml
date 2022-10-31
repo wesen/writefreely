@@ -11,12 +11,21 @@ networks:
 
 services:
   writefreely-web:
+    build: .
+
     container_name: "writefreely-web"
     image: "writeas/writefreely:latest"
 
-    volumes:
-      - "web-keys:/go/keys"
-      - "./config.ini:/go/config.ini"
+    environment:
+      CONFIG_INI: "${CONFIG_INI}"
+      COOKIES_AUTH_KEY: "${COOKIES_AUTH_KEY}"
+      COOKIES_ENC_KEY: "${COOKIES_ENC_KEY}"
+      CSRF_KEY: "${CSRF_KEY}"
+      EMAIL_KEY: "${EMAIL_KEY}"
+
+#    volumes:
+#      - "./web-keys:/go/keys"
+#      - "./config.ini:/go/config.ini"
 
     networks:
       - "internal_writefreely"
@@ -30,18 +39,22 @@ services:
 
     restart: unless-stopped
 
-  writefreely-db:
-    container_name: "writefreely-db"
-    image: "mariadb:latest"
-
-    volumes:
-      - "db-data:/var/lib/mysql/data"
-
-    networks:
-      - "internal_writefreely"
-
-    environment:
-      - MYSQL_DATABASE=writefreely
-      - MYSQL_ROOT_PASSWORD=changeme
-
-    restart: unless-stopped
+#  writefreely-db:
+#    container_name: "writefreely-db"
+#    image: "mariadb:latest"
+#
+#    volumes:
+#      - "db-data:/var/lib/mysql/data"
+#
+#    networks:
+#      - "internal_writefreely"
+#      - "external_writefreely"
+#
+#    environment:
+#      - MYSQL_DATABASE=writefreely
+#      - MYSQL_ROOT_PASSWORD=changeme
+#
+#    ports:
+#      - "3306:3306"
+#
+#    restart: unless-stopped
